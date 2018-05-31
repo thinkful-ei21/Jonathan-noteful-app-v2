@@ -22,7 +22,7 @@ knex
 // knex
 //   .select('id', 'title', 'content')
 //   .from('notes')
-//   .where('id', 1001)
+//   .where('id', 1000)
   
 //   .then(([results]) => {
 //     if (results) {
@@ -39,7 +39,7 @@ knex
 // knex
 //   .update(updateInfo)
 //   .from('notes')
-//   .where('id', 1001)
+//   .where('id', 1002)
 //   .returning(['id', 'title', 'content'])
   
 //   .then(([results]) => {
@@ -71,7 +71,7 @@ knex
 //   });  
 
 // knex
-//   .where('id', 1001)
+//   .where('id', 1003)
 //   .from('notes')
 //   .del()
 //   .then(() => {
