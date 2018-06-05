@@ -1,5 +1,6 @@
 'use strict';
 
+
 const express = require('express');
 const router = express.Router();
 
@@ -11,7 +12,8 @@ router.get('/notes', (req, res, next) => {
   const { searchTerm, folderId } = req.query;
 
   knex
-    .select('notes.id' , 'title', 'content', 'folders.id as folderId', 'folders.name as folderName', 'tags.name as tagName', 'tags.id as tagId')
+    .select('notes.id' , 'title', 'content', 'folders.id as folderId',
+      'folders.name as folderName', 'tags.name as tagName', 'tags.id as tagId', 'notes.created')
     .from('notes')
     .leftJoin('folders', 'notes.folder_id', 'folders.id')
     .leftJoin('notes_tags', 'notes.id', 'notes_tags.note_id')
@@ -46,7 +48,8 @@ router.get('/notes/:id', (req, res, next) => {
   const id = req.params.id;
 
   knex
-    .select('notes.id' , 'title', 'content', 'folders.id as folderId', 'folders.name as folderName', 'tags.name as tagName', 'tags.id as tagId')
+    .select('notes.id' , 'title', 'content', 'folders.id as folderId',
+      'folders.name as folderName', 'tags.name as tagName', 'tags.id as tagId', 'notes.created')
     .from('notes')
     .leftJoin('folders', 'notes.folder_id', 'folders.id')
     .leftJoin('notes_tags', 'notes.id', 'notes_tags.note_id')
@@ -126,9 +129,10 @@ router.put('/notes/:id', (req, res, next) => {
 
 // Post (insert) an item
 router.post('/notes', (req, res, next) => {
-  const { title, content, folder_id, tags} = req.body;
+  const { title, content, folder_id } = req.body;
   const newItem = {title, content, folder_id};
-  
+  const tags= req.body.hasOwnProperty('tags') ? req.body.tags : [];
+
   /***** Never trust users - validate input *****/
   if (!newItem.title) {
     const err = new Error('Missing `title` in request body');

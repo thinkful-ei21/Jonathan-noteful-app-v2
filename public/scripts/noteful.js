@@ -34,15 +34,16 @@ const noteful = (function () {
   /**
    * GENERATE HTML FUNCTIONS
    */
+
   function generateNotesList(list, currNote) {
     const listItems = list.map(item => `
       <li data-id="${item.id}" class="js-note-element ${currNote.id === item.id ? 'active' : ''}">
         <a href="#" class="name js-note-link">${item.title}</a>
         <button class="removeBtn js-note-delete-button">X</button>
         <div class="metadata">
-            <div class="date">${moment(item.created).calendar()}</div>
-            <div class="tags">${getTagsCommaSeparated(item.tags)}</div>
-          </div>
+          <div class="date">${moment(item.created).calendar()}</div>
+          <div class="tags">${getTagsCommaSeparated(item.tags)}</div>
+        </div>
       </li>`);
     return listItems.join('');
 
